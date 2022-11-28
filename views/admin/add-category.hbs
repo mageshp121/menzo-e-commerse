@@ -1,0 +1,35 @@
+
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/gh/cosmogicofficial/quantumalert@latest/minfile/quantumalert.js" charset="utf-8"></script>
+<div style="background-color:#B1D7B4 ; width:30rem;margin-left: 30rem;">
+  <section style=" width:30rem; margin-top: 10rem;">
+   
+    <form id="addcategory">
+      <label for="">CATEGORY</label>
+      <input type="text" class="form-control" name="category" required />
+      <button type="submit" class="btn btn-primary mt-4">submit</button>
+    </form>
+  </section>
+</div>
+<script>
+  $("#addcategory").submit((e)=>{
+            e.preventDefault()
+            console.log("vannnnnnnnnn")
+            $.ajax({
+                url:'/admin/add-category',
+                method:'post',
+                data:$('#addcategory').serialize(),
+                success:(response)=>{
+                  if(response.ok){
+                    Swal.fire({
+                      icon: 'success',
+                      title: 'success',
+                       text: 'category added',
+                     })
+                  }else{
+                   Qual.errord("Oh no !","category is allready exist");
+                  }
+                }
+            })
+        })
+</script>

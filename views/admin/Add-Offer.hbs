@@ -1,0 +1,29 @@
+<section>
+    <div class="container" style="width: 57rem; margin-left: 23;margin-top: 5rem;">
+        <div class="card">
+            <div class="card-body " style="background-color: #f6fdfa;">
+                <h5 class="card-title">Edite product</h5>
+                <!-- Horizontal Form -->
+                <form action="/admin/ADD-Offer" method="post">
+                    <label for="inputEmail3" >Coupon-Code</label>
+                    <input type="text"  name="Couponcode" class="form-control" required>
+                    <label for="inputEmail3" >Percentage</label>
+                    <input type="number"  class="form-control" name="Persantage" required>
+                    <label for="inputPassword3" >Maximum-Amount</label>
+                    <input type="number"  class="form-control" name="MaximunAmount"required>
+                     <label for="inputPassword3" >minmum Purchase Amount</label>
+                    <input type="number" class="form-control" name="minParchase"required>
+                    <label for="inputPassword3" >About-Coupen</label>
+                    <input type="text" class="form-control" name="About" required>
+                    <label for="inputPassword3" >Enter starting date</label>
+                    <input type="datetime-local" class="form-control" name="starting" required>
+                    <label for="inputPassword3" >Enter expiry date</label>
+                    <input type="datetime-local" class="form-control" name="expiry" required>
+                    <div class="text-center">
+                    <button type="submit" style="margin-top: 2rem;" class="btn btn-dark">Submit</button>
+                    </div>
+                </form><!-- End Horizontal Form -->
+            </div>
+        </div>
+    </div>
+</section>

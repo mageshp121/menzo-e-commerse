@@ -1,0 +1,84 @@
+
+{{!-- new <header></header> --}}
+<header class="header" >
+  <div class="header__top" >
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 col-md-7">
+          <div class="header__top__left">
+            {{#if user}}
+            <i style="color: white;fon">Hay {{userA.Name}}</i>
+            {{else}}
+            <p>Please Login</p>
+            {{/if}}
+          </div>
+        </div>
+        <div class="col-lg-6 col-md-5">
+          <div class="header__top__right">
+            <div class="header__top__links">
+             {{#if userA}}
+             <a href="/logout">Logout</a>
+            {{else}}
+            <a href="/userlogin">Login/signUp</a>
+            {{/if}}
+            </div>
+            <div class="header__top__hover">
+              <span>Usd <i class="arrow_carrot-down"></i></span>
+              <ul>
+                <li>USD</li>
+                <li>EUR</li>
+                <li>USD</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-3 col-md-3">
+        <div class="header__logo">
+          <a href="../index.html"><img src="../img/Untitled-1.png" alt=""></a>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6">
+        <nav class="header__menu mobile-menu">
+          <ul>
+            <li><a href="#">Pages</a>
+              <ul class="dropdown">
+                {{#if userA}}
+                <li><a href="/Add-adress">Add-adress</a></li>
+                <li><a href="/order-history">Your orders</a></li>
+                <li><a href="/wallet">Wallet</a></li>
+                <li><a href="./checkout.html">Check Out</a></li>
+                {{/if}}
+              </ul>
+            </li>    
+            <li><a href="#">Category</a>
+              <ul class="dropdown">
+                {{#each ctdata}}
+                <li><a class="dropdown-item" href="/get-Category-products/{{this.category}}">{{this.category}}</a></li>
+                 {{/each}}
+              </ul>
+            </li> 
+            <li><a href="/wallet_history">Wallet-History</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="col-lg-3 col-md-3">
+        <div class="header__nav__option">
+          <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>
+          <a href="/wishlist"><img src="img/icon/heart.png" alt=""></a>
+          <a href="/cart" class="nav-link"><img src="../img/trolley.png" style="height: 2rem;" width="auto" alt=""><span id="cart-count" class="badge badge-danger">{{cartCount}}</span></a>
+          {{#if userA}}
+          <div class="price" style="border: black;"><p>Wallet: ₹{{userA.WalletAmount}}</p></div>
+          {{else}}
+           <div class="price"><h6>Wallet: ₹ 0</h6></div>
+           {{/if}}
+        </div>
+      </div>
+    </div>
+    <div class="canvas__open"><i class="fa fa-bars"></i></div>
+  </div>
+</header>

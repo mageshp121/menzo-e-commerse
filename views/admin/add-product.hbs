@@ -1,0 +1,31 @@
+<section style="margin-left: 20rem; width:50rem; margin-top: 5rem; height:30rem">
+  <div class="h-10">
+    <form action="/admin/add-product" method="post" enctype="multipart/form-data">
+<div>
+    <label for="">Product-Name</label> 
+    <input type="text" class="form-control" name="productname"  placeholder="product-Name"required>
+   </div>
+   <div><label for="">Product-Discription</label> 
+    <input type="text" class="form-control" name="productdiscription" placeholder="discription"required></div>
+    <div> <label for="">Brand</label> 
+    <input type="text" class="form-control" name="productbrand" placeholder="Brand" required></div>
+    <div><label for="">Price</label> 
+    <input type="number" class="form-control" name="price" placeholder="Price " required></div>
+    <div> 
+   <label for="">Image</label>
+      <input type="file" name="image" class="form-control" required>
+    </div>
+     <label for="cars">Choose a Category:</label>
+      <select name="category" required> 
+        {{#each ctdata}}
+      <option value="{{this.category}}">{{this.category}}</option>
+       {{/each}}
+      </select> 
+      <div>
+       <button type="submit" class="btn btn-primary">submit</button>
+      </div>
+</form>
+</div>     
+</section>
+
+

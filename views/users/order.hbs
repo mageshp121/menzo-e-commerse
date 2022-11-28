@@ -1,0 +1,372 @@
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/gh/cosmogicofficial/quantumalert@latest/minfile/quantumalert.js" charset="utf-8"></script>
+<section>
+<div class="container ">
+  <div class="row">
+    <div>
+      <h3 style="padding-right:50rem;">Selact your adress</h3>
+    </div>
+    {{#each savedAdress }}
+    <div class="card  mb-3" style="max-width: 18rem;">
+      <div class="card-header">
+        <input type="radio" id="" value="{{this.id}}" name="adressUid" required >
+        Address
+      </div>
+      <div class="card-body text-dark">
+        <p class="text-dark">Name:{{this.Name}}</p>
+        <p class="text-dark">Email:{{this.Email}}</p>
+        <p class="text-dark">City:{{this.City}}</p>
+        <p class="text-dark">state:{{this.state}}</p>
+        <p class="text-dark">Adress:{{this.Adress}}</p>
+        <p class="text-dark">pincode:{{this.pincode}}</p>
+        <p class="text-dark">Number:{{this.Phone}}</p>
+        <button class=" delete-button btn btn-danger"
+          onclick="removeAdress('{{this.id}}','{{this._id}}')">Delete</button>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+  <div class="row">
+    <div class="cart__discount">
+      <h6>Discount codes</h6>
+      <form action="" id="coupenForm" style="margin-right:52rem;">
+        <div style="width:16rem;"><input id="couponCode" type="text" name="Couponcode" placeholder="Coupon-Code"></div>
+        <input type="text" value="{{Total}}" name="TotalAmount" hidden>
+        <button style="width:12rem ;height:3rem ;" class="btn" type="submit">Apply</button>
+      </form>
+    </div>
+  </div>
+  <div style="margin-right:5rem ;">
+    <a style="" class="login-trigger btn btn-dark" href="#" data-target="#login" data-toggle="modal">Add New Address</a>
+    <div id="login" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-body">
+            <button data-dismiss="modal" class="close">&times;</button>
+            <h4>ADD-New-One</h4>
+            <form action="/ADD-AD" method="post">
+              <input type="text" name="Name" class="password form-control" placeholder="Name" />
+              <input type="text" name="Town" class="password form-control" placeholder="Town" />
+              <textarea name="adress" placeholder="Adress" id=""
+                style="width:20rem;color: #dadada;  margin-right:14rem;"></textarea>
+              <input type="text" name="state" class="password form-control" placeholder="State" />
+              <input type="email" name="Email" class="password form-control" placeholder="Email" />
+              <input type="text" name="Pincode" class="password form-control" placeholder="Pincode" />
+              <input type="text" name="Phone" class="password form-control" placeholder="Phone-Number" />
+              <button class="btn btn-dark" type="submit">Add-adress</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--Trigger-->
+  <!-- Button trigger modal -->
+  <button style="width: 10rem;margin-right:1rem;margin-top:2rem ;" type="button" class="btn btn-dark "
+    data-toggle="modal" data-target="#exampleModalCenter">Coupones</button>
+  <!-- Modal -->
+  <div class="modal fade " id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Your Offers</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body ">
+          {{#each coupons}}
+          <div id="{{this._id}}" class="card w-75 border border-info">
+            <div class="card-body">
+              <h5 class="card-title"></h5>
+              <h2 class="text-success">{{this.Persentage}}%</h2>
+
+            </div>
+          </div>
+          {{/each}}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="margin-top: 60px; margin-bottom: 6rem;" class="Yorder">
+    <table>
+      <tr>
+        <th colspan="2">Your order</th>
+      </tr>
+      <tr>
+        <td>Total</td>
+        <td>₹<span id="ttlamount">{{Total}}</span> </td>
+      </tr>
+      <tr id="newTdis" style="display: none;">
+        <td>SUbtotal</td>
+        <td>₹<span id="newtd"></span></td>
+      </tr>
+      <tr>
+        <td>Shipping</td>
+        <td>Free shipping</td>
+      </tr>
+    </table><br>
+    <div><input type="radio" name="payment-method" value="dbt" checked> Direct Bank Transfer</div>
+    <p>Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your
+      orderwill not be shipped until the funds have cleared in our account.</p>
+    <div><input type="radio" name="payment-method" value="COD"> Cash on Delivery</div>
+    <div><input type="radio" name="payment-method" value="cd"> RazorPay <span><img src="https://www.logolynx.com/images/logolynx/c3/c36093ca9fb6c250f74d319550acac4d.jpeg" alt=""width="50"></span>
+    </div>
+     <div><input type="radio" name="payment-method" value="Walet">Use Walletamount</div>
+    <button class="main-btn" type="submit" onclick="procedTopayment()">Place Order</button>
+  </div><!-- Yorder -->
+</div>
+</section>
+<style>
+  @import url('https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700');
+
+  body {
+    background-color: #e1e9e8;
+    font-family: 'Roboto Condensed', sans-serif;
+    color: #262626;
+  }
+  .container {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+   
+  }
+  .odfm {
+    width: 22rem;
+    height: 17rem;
+    background-color: #EBECF0;
+  }
+  .d-flex {
+    display: flex;
+    flex-direction: row;
+    background: #f6f6f6;
+    border-radius: 0 0 5px 5px;
+    padding: 25px;
+  }
+  form {
+    flex: 4;
+  }
+  .Yorder {
+    flex: 2;
+  }
+  .title {
+    background-color: antiquewhite;
+  }
+  h2 {
+    margin: 0;
+    padding-left: 15px;
+  }
+  label,
+  table {
+    display: block;
+    margin: 15px;
+  }
+  label>span {
+    float: left;
+    width: 25%;
+    margin-top: 12px;
+    padding-right: 10px;
+  }
+  input[type="text"],
+  input[type="tel"],
+  input[type="email"],
+  select {
+    width: 70%;
+    height: 30px;
+    padding: 5px 10px;
+    margin-bottom: 10px;
+    border: 1px solid #dadada;
+    color: #888;
+  }
+  select {
+    width: 72%;
+    height: 45px;
+    padding: 5px 10px;
+    margin-bottom: 10px;
+  }
+  .Yorder {
+    margin-top: 15px;
+    height: 600px;
+    padding: 20px;
+    border: 1px solid #dadada;
+  }
+  table {
+    margin: 0;
+    padding: 0;
+  }
+  th {
+    border-bottom: 1px solid #dadada;
+    padding: 10px 0;
+  }
+  tr>td:nth-child(1) {
+    text-align: left;
+    color: #2d2d2a;
+  }
+  tr>td:nth-child(2) {
+    text-align: right;
+    color: #52ad9c;
+  }
+  td {
+    border-bottom: 1px solid #dadada;
+    padding: 25px 25px 25px 0;
+  }
+  p {
+    display: block;
+    color: #888;
+    margin: 0;
+    padding-left: 25px;
+  }
+  .Yorder>div {
+    padding: 15px 0;
+  }
+  .main-btn {
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px;
+    border: none;
+    border-radius: 30px;
+    background: #52ad9c;
+    color: #fff;
+    font-size: 15px;
+    font-weight: bold;
+  }
+  .delete-button {
+    width: 5rem;
+    margin-left: 4rem;
+    border-radius: 1rem;
+  }
+  .rowOne {
+    margin-left: 10rem;
+    margin-top: 5rem;
+  }
+</style>
+<script src="https://cdn.jsdelivr.net/clipboard.js/1.5.12/clipboard.min.js"></script>
+<script>
+  function procedTopayment() {
+    console.log('prcpmnt>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
+    uiAdress = document.querySelector('input[name=adressUid]:checked').value;
+    payment = document.querySelector('input[name=payment-method]:checked').value;
+    $.ajax({
+      url: '/place-order',
+      data: {
+        selectedAdress: uiAdress,
+        selectedPayment: payment
+      },
+      method: 'post',
+      success: (response) => {
+        console.log(response)
+        alert(response)
+        if (response.Codsuccess) {
+          location.href = '/orderSuccess'
+        } else if(response.placeOk){
+          location.href = '/orderSuccess'
+        }else {
+          razorPayMethode(response)
+          console.log(response,'//////////////////adddddddddddddddddddddddddd')
+        }
+      }
+    })
+  }
+
+
+  function razorPayMethode(order) {
+    console.log(order,'RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRr')
+    console.log('RAZORPAYRMMMMMMMMMMMMMMMMMMMMMMM')
+    var options = {
+      "key": "rzp_test_ESLJkTRKX7FKo3", // Enter the Key ID generated from the Dashboard
+      "amount": order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+      "currency": "INR",
+      "name": "male Fasion",
+      "description": "Test Transaction",
+      "image": "https://example.com/your_logo",
+      "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+      "handler": function (response) {
+        verifypayment(response, order)
+
+      },
+      "prefill": {
+        "name": "Gaurav Kumar",
+        "email": "gaurav.kumar@example.com",
+        "contact": "9999999999"
+      },
+      "notes": {
+        "address": "Razorpay Corporate Office"
+      },
+      "theme": {
+        "color": "#3399cc"
+      }
+    }
+    var rzp1 = new Razorpay(options);
+    rzp1.open();
+  }
+  function verifypayment(payment, order) {
+    console.log('VERIFYLOGINMNNNNNNNNNNNNNNNNNNNNNNNNN')
+    $.ajax({
+      url: '/verify-payment',
+      data: {
+        payment,
+        order
+      },
+      method: 'post',
+      success: (response) => {
+        if (response.status) {
+          location.href = '/orderSuccess'
+        } else {
+          alert('payment faild')
+        }
+      }
+    })
+
+
+
+  }
+  let Enter = 0
+  $('#coupenForm').submit((e) => {
+    let finalprice = document.getElementById('ttlamount').innerHTML
+    console.log(finalprice, '<<<<<<<<<<<<<<<<<<<<<<')
+    e.preventDefault()
+    $.ajax({
+      url: '/apply-coupon',
+      data: $('#coupenForm').serialize(),
+      method: 'post',
+      success: (response) => {
+        if (Enter == 0)
+          console.log(response, '??????????')
+        if (response.status) {
+          console.log(response.FinalAmount)
+          document.getElementById('newTdis').style.display="table-row"
+           document.getElementById('newtd').innerHTML=response.FinalAmount
+            Swal.fire({
+            icon: 'success',
+            title: 'Enjoy',
+            text: 'Coupon Added',
+          })
+          Enter++
+        } else if (response.ok) {
+          console.log(response.finalAmount,'???????????????????????<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<')
+           document.getElementById('newTdis').style.display="table-row"
+          document.getElementById('newtd').innerHTML=response.finalAmount
+         Swal.fire({
+            icon: 'success',
+            title: 'Enjoy',
+            text: 'Maximum Amount applied ',
+          })
+          Enter++
+        } else if (response.expired) {
+            Qual.error("Oh no !","Coupon EXpired or coupon not exist or coupone note live");
+        } else if (response.invalied) {
+          console.log("note working")
+           Qual.errord("Oh no !","Invalied Coupon Code or coupon not exist");
+        }else if(response.min){
+           Qual.errord("sorry Coupone is note applicable!","MinimumParcahse amount is"+response.minAmount);
+        }
+      }
+    })
+  })
+</script>

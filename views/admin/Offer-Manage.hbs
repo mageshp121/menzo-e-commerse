@@ -1,0 +1,80 @@
+
+<style>
+     @import url('https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700');
+    body{
+    background-color: #e1e9e8;
+     font: 100%/1.5 Verdana, sans-serif;
+    margin: 5% 0;
+  }
+  </style>
+<section class="section">
+    <div class="row " style="display: flex;align-items: center;justify-content: center">
+        <div class="col-lg-9 col-12 " style="margin-top: 5rem;margin-left:18rem ;">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">OfferMange-Table</h5>
+                    <div style="padding-bottom:3rem;"><a href="/admin/Add-Offer" class="btn btn-dark">Add-products</a></div>
+                    <!-- Default Table -->
+                    <table class="orderTable table-bordered"  style="background-color:antiquewhite; ">
+                        <thead  class="align-middle">
+                            <tr class="align-middle">
+                                <th class="align-middle" scope="col">NO.</th>
+                                <th class="align-middle" scope="col">Coupon-Code</th>
+                                <th class="align-middle" scope="col">Persantage %</th>
+                                <th class="align-middle" scope="col">Max-Amount</th>
+                                <th class="align-middle" scope="col">About</th>
+                                <th class="align-middle" scope="col">Manage</th>
+                                <th class="align-middle" scope="col">Expiry Date</th>
+                            </tr>
+                        </thead>
+
+                        <tbody class="align-middle">
+                            {{#each offers}}
+                            <tr class="align-middle">
+                                <th class="create_index"></th>
+                                <td class="align-middle">{{this.code}}</td>
+                                <td class="align-middle">{{this.Persantage}}%</td>
+                                <td class="align-middle">₹ {{this.MaximumEmount}}</td>
+                                <td class="align-middle">{{this.About}}</td>
+                                <td class="align-middle">{{this.ExpiryDate}}</td>
+                                <td class="align-middle">
+                                    <button type="button" class="btn " style="border-color: #CBE4F9 ;background-color:aliceblue ;" data-toggle="modal"data-target="#a{{this._id}}">Delete </button>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="a{{this._id}}" tabindex="-1" role="dialog"
+                                        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLongTitle">Confirm</h5>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-dismiss="modal">Close</button>
+                                                   <a href="/admin/Delete-Offer/{{this._id}}"class="btn btn-primary">Delete</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                    <!-- End Default Table Example -->
+                </div>
+            </div>
+</section>
+<script>
+    $(document).ready(function () {
+        $('.orderTable').DataTable();
+    });
+    var divs = document.querySelectorAll('.create_index'); for (var i = 0; i <
+        divs.length; ++i) { divs[i].innerHTML = i + 1; }
+</script>

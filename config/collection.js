@@ -1,0 +1,11 @@
+module.exports={
+    PRODUCT_COLLECTION:'product',
+    CATEGORY_COLLECTION:'category',
+    USERS_COLLECTION:'usercredntial',
+    CART_COLLECTION:'cart',
+    ORDER_COLLECTION:'order',
+    WISHLIST_COLLECTON:'wishlist',
+    WALLET_COLLECTION:'wallet',
+    OFFER_COLLECTION:'coupons',
+    JUST:"just"
+}

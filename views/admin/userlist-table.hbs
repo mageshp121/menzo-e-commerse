@@ -1,0 +1,57 @@
+<style>
+     @import url('https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700');
+    body{
+    background-color: #e1e9e8;
+     font: 100%/1.5 Verdana, sans-serif;
+    margin: 5% 0;
+  }
+  </style>
+    <section class="section">
+      <div class="row " style="display: flex;align-items: center;justify-content: center" >
+        <div class="col-lg-9 col-12 " style="margin-top: 5rem;margin-left:18rem ;">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">USER-DATA</h5>
+              <!-- Default Table -->
+              <table class="orderTable align-middle table-bordered" style="background-color:antiquewhite; " >
+                <thead class="align-middle">
+                  <tr>
+                    <th >NO.</th>
+                    <th >Name</th>
+                    <th >Mail id</th>
+                    <th >Phone Number</th>
+                    <th>Manage</th>
+                    <th>Delete</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {{#each userdata}}
+                  <tr>
+                    <th class="create_index"></th>
+                    <td>{{this.Name}}</td>
+                    <td>{{this.email}}</td>
+                    <td>{{this.Number}}</td>
+                    <td>
+                      {{#if this.blocked}}
+                      <a class="btn btn-success"  href="/index/unblock/{{this._id}}">unblock</a>
+                      {{else}}
+                      <a class="btn btn-dark"  href="/index/block/{{this._id}}">block</a>
+                      {{/if}}
+                    </td>
+                    <td><a href="/admin/delete-userdata/{{this._id}}"><img style="height:1rem;margin-left: 12px;" src="/adminfiles/img/delete.png" alt=""></a> </td>
+                  </tr>
+                  {{/each}}
+                </tbody>
+              </table>
+              <!-- End Default Table Example -->
+            </div>
+          </div>
+    </section>
+  <script>
+      $(document).ready(function () {
+    $('.orderTable').DataTable();
+  });
+      var divs = document.querySelectorAll('.create_index'); for (var i = 0; i <
+      divs.length; ++i) { divs[i].innerHTML = i + 1; }
+    </script>
+   

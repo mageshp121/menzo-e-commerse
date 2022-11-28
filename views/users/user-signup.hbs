@@ -1,0 +1,222 @@
+{{!-- <!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <section>
+    <div class="container-fluid d-flex justify-content-center align-items-center mt-5  pt-5 imagess "
+      style=" border-radius: 50px; width:500px;">
+      <form action="/usersignup" method="POST" class=" mb-5">
+        <h1 style="padding-left:2rem ;">sign up</h1>
+        <div class="form-outline mb-5  ">
+          <!-- name input -->
+          <label class="form-label" for="form2Example1">Name</label>
+          <input type="name" id="form2Example1" name="Name" class="form-control " />
+        </div>
+        <!-- Email input -->
+        <div class="form-outline mb-5  ">
+          <label class="form-label" for="form2Example1">Email</label>
+          <input type="mail" id="form2Example1" name="email" class="form-control " />
+        </div>
+        <!-- Password input -->
+        <div class="form-outline mb-4">
+          <label class="form-label" for="form2Example2">Password</label>
+          <input type="password" id="form2Example2 " name="password" class="form-control" />
+        </div>
+        <label class="form-label" for="form2Example2">Mobile No.</label>
+        <input type="text" id="form2Example2 " name="Number" class="form-control" />
+        <p style="color: red;">{{error}}</p>
+        <!-- 2 column grid layout for inline styling -->
+        <div class="row mb-4">
+          <div class="col d-flex justify-content-center">
+            <!-- Checkbox -->
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="form2Example31" checked />
+              <label class="form-check-label" for="form2Example31"> Remember me </label>
+            </div>
+          </div>
+          <div class="col">
+            <!-- Simple link -->
+            <a href="#!">Forgot password?</a>
+          </div>
+        </div>
+        <!-- Submit button -->
+        <button style="border-radius: 50px;" type="submit"
+        class="col-md-12 col-12 btn btn-primary btn-rounded">Submit</button>
+        <!-- Register buttons -->
+        {{!-- <a href="/user-signup"> Don't have account Sign Up</a>
+        <button class="btn-success"><a href="/adminlogin">admin login</a></button> --}}
+      </form>
+    </div>
+    <div>
+  </section>
+  <style>
+    body {
+      background-image: url("../img/pink-blue-gradient-linear-1920x1080-c2-87cefa-ffb6c1-a-285-f-14.jpg");
+    }
+  </style>
+</body>
+
+</html> --}}
+
+
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up Form</title>
+</head>
+<body>
+  <section class="sc">
+    <div>
+         <form action="/usersignup" method="post">
+            <h1>Sign Up</h1>
+            <span>Your basic info</span>
+            <label for="name">Name:</label>
+            <input type="text" name="Name">
+            <label for="password">Mobile:</label>
+            <input type="text"   name="Number">
+            <label for="mail">Email:</label>
+            <input type="email" id="mail"name="email" >
+            <label for="password">Password:</label>
+            <input type="text"   name="password">
+        <button type="submit">Sign Up</button>
+    </form>
+    </div>
+  </section>
+</body>
+</html>
+<style>
+  *, *:before, *:after {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Nunito', sans-serif;
+  color: #384047;
+  
+}
+
+ .sc{
+  margin-top: -6rem;
+ } 
+
+
+form {
+  max-width: 300px;
+  margin: 10px auto;
+  padding: 10px 20px;
+  background: #f4f7f8;
+  border-radius: 8px;
+  margin-top: 100px;
+}
+
+h1 {
+  margin: 0 0 30px 0;
+  text-align: center;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="date"],
+input[type="datetime"],
+input[type="email"],
+input[type="number"],
+input[type="search"],
+input[type="tel"],
+input[type="time"],
+input[type="url"],
+textarea,
+select {
+  background: rgba(255,255,255,0.1);
+  border: none;
+  font-size: 16px;
+  height: auto;
+  margin: 0;
+  outline: 0;
+  padding: 15px;
+  width: 100%;
+  background-color: #e8eeef;
+  color: #8a97a0;
+  box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
+  margin-bottom: 30px;
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+  margin: 0 4px 8px 0;
+}
+
+select {
+  padding: 6px;
+  height: 32px;
+  border-radius: 2px;
+}
+
+button {
+  padding: 19px 39px 18px 39px;
+  color: #FFF;
+  background-color: #4bc970;
+  font-size: 18px;
+  text-align: center;
+  font-style: normal;
+  border-radius: 5px;
+  width: 100%;
+  border: 1px solid #3ac162;
+  border-width: 1px 1px 3px;
+  box-shadow: 0 -1px 0 rgba(255,255,255,0.1) inset;
+  margin-bottom: 10px;
+}
+
+fieldset {
+  margin-bottom: 30px;
+  border: none;
+}
+
+legend {
+  font-size: 1.4em;
+  margin-bottom: 10px;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+}
+
+label.light {
+  font-weight: 300;
+  display: inline;
+}
+
+.number {
+  background-color: #5fcf80;
+  color: #fff;
+  height: 30px;
+  width: 30px;
+  display: inline-block;
+  font-size: 0.8em;
+  margin-right: 4px;
+  line-height: 30px;
+  text-align: center;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.2);
+  border-radius: 100%;
+}
+
+@media screen and (min-width: 480px) {
+
+  form {
+    max-width: 480px;
+  }
+
+}
+</style>

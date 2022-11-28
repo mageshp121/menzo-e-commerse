@@ -1,0 +1,71 @@
+
+
+  <style>
+     @import url('https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700');
+    body{
+    background-color: #e1e9e8;
+     font: 100%/1.5 Verdana, sans-serif;
+    margin: 5% 0;
+  }
+  </style>
+<script src="https://cdn.jsdelivr.net/gh/cosmogicofficial/quantumalert@latest/minfile/quantumalert.js" charset="utf-8"></script>
+<section class="section">
+  <div class="row " style="display: flex;align-items: center;justify-content: center">
+    <div class="col-lg-6 col-12 " style="margin-top: 10rem;">
+      <h5 style="font-family:aria-hidden;color:red;">{{productExist}}</h5>
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Category-Mange</h5>
+          <div style="padding-bottom:3rem;"><a class="btn btn-dark" href="/admin/add-category">Add-Category</a></div>
+          <!-- Default Table -->
+          <table class="orderTable  table-bordered" style="background-color:antiquewhite; " >
+            <thead class="align-middle">
+              <tr>
+                <th class="align-middle" scope="col"></th>
+                <th class="align-middle" scope="col">category</th>
+                <th class="align-middle" scope="col">Edite</th>
+                <th class="align-middle"scope="col">Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each ctdata}}
+              <tr>
+                <td class="create_index"></td>
+                <td class="align-middle">{{this.category}}</td>
+                <td class="align-middle"><a class="btn" style="border-color: #CBE4F9 ;background-color:aliceblue ;" href="/admin/edite-category?id={{2}}">Edite</a></td>
+                <td class="align-middle"><button type="button" class="btn " style="border-color: #CBE4F9 ;background-color:aliceblue ;"data-toggle="modal" data-target="#model{{this._id}}">Delete</button>
+                  <!-- Modal -->
+                  <div class="modal fade" id="model{{this._id}}" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          <h4 style="color: red;">Do you want to delete this...?</h4>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                          <a class="btn" style="border-color: #CBE4F9 ;background-color:aliceblue ;"href="/admin/delete-category/{{this.category}}">Delete</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              {{/each}}
+            </tbody>
+          </table>
+        </div>
+      </div>
+</section>
+<script>
+  $(document).ready(function () {
+    $('.orderTable').DataTable();
+  });
+  var divs = document.querySelectorAll('.create_index'); for (var i = 0; i <
+    divs.length; ++i) { divs[i].innerHTML = i + 1; }
+
+</script>

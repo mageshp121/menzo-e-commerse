@@ -1,0 +1,84 @@
+<style>
+     @import url('https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700');
+    body{
+    background-color: #e1e9e8;
+     font: 100%/1.5 Verdana, sans-serif;
+    margin: 5% 0;
+  }
+  </style>
+<section class="section">
+  <div class="row " style="display: flex;align-items: center;justify-content: center">
+    <div class="col-lg-9 col-12 " style="margin-top: 5rem;margin-left:18rem ;">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">ProductManage-Table</h5>
+          <div style="padding-bottom:3rem;">
+            <a href="/admin/add-product" class="btn btn-dark" >Add-products</a>
+          </div>
+          <!-- Default Table -->
+          <table class="orderTable table-bordered" style="background-color:antiquewhite;">
+            <thead class="align-middle">
+              <tr>
+                <th scope="col">NO.</th>
+                <th scope="col">Name</th>
+                <th scope="col">Description</th>
+                <th scope="col">Image</th>
+                <th scope="col">Price</th>
+                <th scope="col">Category</th>
+                <th scope="col">Edite</th>
+                <th scope="col">Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each products}}
+              <tr>
+                <th class="create_index"></th>
+                <td>{{this.productname}}</td>
+                <td>{{this.productdiscription}}</td>
+                <td><img style="width: 50px;" src="/product-images/{{this._id}}.jpg" alt="">
+                  <img style="width:50px" src="/product-images1/{{this._id}}.jpg" alt="">
+                  <img style="width:50px" src="/product-images2/{{this._id}}.jpg" alt="">
+                  <img style="width:50px" src="/product-images3/{{this._id}}.jpg" alt="">
+                </td>
+                <td class="align-middle">{{this.price}}</td>
+                <td class="align-middle">{{this.category}}</td>
+                <td class="align-middle"><a class="btn" style="border-color: #CBE4F9 ;background-color:aliceblue ;"
+                    href="/admin/edite-product?id={{this._id}}">Edite</a></td>
+                <td class="align-middle"><button type="button" class="btn "
+                    style="border-color: #CBE4F9 ;background-color:aliceblue ;" data-toggle="modal"
+                    data-target="#model{{this._id}}">Delete</button>
+                  <!-- Modal -->
+                  <div class="modal fade" id="model{{this._id}}" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          <h4 style="color: red;">Do you want to delete this...?</h4>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                          <a href="/admin/delete-product/{{this._id}}" class="btn btn-primary">Delete</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              {{/each}}
+            </tbody>
+          </table>
+          <!-- End Default Table Example -->
+        </div>
+      </div>
+</section>
+<script>
+  $(document).ready(function () {
+    $('.orderTable').DataTable();
+  });
+  var divs = document.querySelectorAll('.create_index'); for (var i = 0; i <
+    divs.length; ++i) { divs[i].innerHTML = i + 1; }
+</script>
