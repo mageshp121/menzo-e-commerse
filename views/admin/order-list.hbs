@@ -1,13 +1,4 @@
-<style>
-  @import url('https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700');
-
-  body {
-    background-color: #e1e9e8;
-    font-family: 'Roboto Condensed', sans-serif;
-    color: #262626;
-    margin: 5% 0;
-  }
-
+{{!-- <style>
   .container {
     width: 100%;
     padding-right: 15px;
@@ -22,11 +13,7 @@
     }
   }
 
-  .odfm {
-    width: 22rem;
-    height: 17rem;
-    background-color: #EBECF0;
-  }
+
 
   .d-flex {
     display: flex;
@@ -116,10 +103,6 @@
     color: #52ad9c;
   }
 
-  td {
-    border-bottom: 1px solid #dadada;
-    padding: 25px 25px 25px 0;
-  }
 
   p {
     display: block;
@@ -149,91 +132,13 @@
     margin-left: 4rem;
     border-radius: 1rem;
   }
-</style>
+</style> --}}
 <style>
-  html, 
-body {
-  font: 100%/1.5 Verdana, sans-serif
-}
-#wrapper {
-  margin: 0 auto;
-  display: block;
-  width: 960px;
-}
-.page-header {
-  text-align: center;
-  font-size: 1.5em;
-  font-weight: normal;
-  border-bottom: 1px solid #ddd;
-  margin: 30px 0
-}
-#pagination {
-  margin: 0;
-  padding: 0;
-  text-align: center
-}
-#pagination li {
-  display: inline
-}
-#pagination li a {
-  display: inline-block;
-  text-decoration: none;
-  padding: 5px 10px;
-  color: #000
-}
+  td {
+    border-bottom: 1px solid #dadada;
 
-/* Active and Hoverable Pagination */
-#pagination li a {
-  border-radius: 5px;
-  -webkit-transition: background-color 0.3s;
-  transition: background-color 0.3s
-    
-}
-#pagination li a.active {
-  background-color: #4caf50;
-  color: #fff
-}
-#pagination li a:hover:not(.active) {
-  background-color: #ddd;
-} 
-
-/* border-pagination */
-.b-pagination-outer {
-  width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  overflow: hidden;
-  display: flex
-}
-#border-pagination {
-  margin: 0 auto;
-  padding: 0;
-  text-align: center
-}
-#border-pagination li {
-  display: inline;
-
-}
-#border-pagination li a {
-  display: block;
-  text-decoration: none;
-  color: #000;
-  padding: 5px 10px;
-  border: 1px solid #ddd;
-  float: left;
-
-}
-#border-pagination li a {
-  -webkit-transition: background-color 0.4s;
-  transition: background-color 0.4s
-}
-#border-pagination li a.active {
-  background-color: #4caf50;
-  color: #fff;
-}
-#border-pagination li a:hover:not(.active) {
-  background: #ddd;
-}
+    text-align: center;
+  }
 </style>
 
 <section class="section">
@@ -245,23 +150,23 @@ body {
         <div class="card-body">
           <h5 class="card-title">OrderManage-Table</h5>
           <!-- Default Table -->
-          <table class=" orderTable  table-bordered"  style="background-color:antiquewhite; ">
-            <thead class="thead-light">
-              <tr>
-                <th class="align-middle" scope="col">NO.</th>
-                <th class="align-middle" scope="col">Order-Id</th>
-                <th class="align-middle" scope="col">Adress</th>
-                <th class="align-middle" scope="col">Amountt</th>
-                <th class="align-middle" scope="col">Status</th>
-                <th class="align-middle" scope="col">Payment-method</th>
-                <th class="align-middle" scope="col">Manage</th>
+          <table class=" orderTable  table-bordered">
+            <thead>
+              <tr class="align-middle">
+                <th class="align-middle">NO.</th>
+                <th class="align-middle">Order-Id</th>
+                <th class="align-middle">Adress</th>
+                <th class="align-middle">Amountt</th>
+                <th class="align-middle">Status</th>
+                <th class="align-middle">Payment-method</th>
+                <th class="align-middle">Manage</th>
               </tr>
             </thead>
             <tbody>
               {{#each OrderDetails}}
               <tr>
                 <td class="create_index"></td>
-                <td class="align-middle">{{this._id}}</td>
+                <td><span class="badge text-bg-dark">{{this._id}}</span></td>
                 <td class="align-middle">
                   <h6>Adress:{{this.deliveryDetails.address}}</h6>
                   <h6>City:{{this.deliveryDetails.city}}</h6>
@@ -269,10 +174,10 @@ body {
                   <h6>Pincode{{this.deliveryDetails.pincode}}</h6>
                   <h6>Mobile{{this.deliveryDetails.Mobile}}</h6>
                 </td>
-                <td class="align-middle">₹ {{this.totalAmount}}</td>
-                <td class="align-middle">{{this.status}}</td>
-                <td class="align-middle">{{this.PaymentMethod}}</td>
-                <td class="align-middle">
+                <td>₹ {{this.totalAmount}}</td>
+                <td><span class="badge text-bg-secondary">{{this.status}}</span></td>
+                <td>{{this.PaymentMethod}}</td>
+                <td>
                   {{#if this.retured}}
                   <p class="text-success">*Chech order Status</p>
                   <select onchange="changeStatus('{{this._id}}')" name="orderstatus" id="{{this._id}}">
@@ -293,9 +198,10 @@ body {
                   {{#if this.CancelRefund}}
                   <p style="color: green;"> Cancel refund successfull</p>
                   {{else}}
-                    <div class="width:2rem">
+                  <div class="width:2rem">
                     <h6 class="text-danger" style="width:10rem;">Product cancel by customer</h6>
-                    <a style=""  class="login-trigger btn btn-dark" href="#" data-target="#login{{this._id}}" data-toggle="modal">Refund</a>
+                    <a style="" class="login-trigger btn btn-dark" href="#" data-target="#login{{this._id}}"
+                      data-toggle="modal">Refund</a>
                     <div id="login{{this._id}}" class="modal fade" role="dialog">
                       <div class="modal-dialog">
                         <div class="modal-content">
@@ -303,11 +209,15 @@ body {
                             <button data-dismiss="modal" class="close">&times;</button>
                             <h4>Refund</h4>
                             <form action="/admin/CancelRE" method="post">
-                               <h4 style="color: red;"><span>Amount:{{this.totalAmount}} /- </span></h4>                              
-                              <input type="number" name="Amount" class="password form-control" value="{{this.totalAmount}}" hidden/>
-                               <input type="text" name="info" class="password form-control" value="canceled refund" hidden/>
-                              <input type="text" name="userId" class="password form-control" value="{{this.userId}}" hidden />
-                              <input type="text" name="orderid" class="password form-control" value="{{this._id}}" hidden />
+                              <h4 style="color: red;"><span>Amount:{{this.totalAmount}} /- </span></h4>
+                              <input type="number" name="Amount" class="password form-control"
+                                value="{{this.totalAmount}}" hidden />
+                              <input type="text" name="info" class="password form-control" value="canceled refund"
+                                hidden />
+                              <input type="text" name="userId" class="password form-control" value="{{this.userId}}"
+                                hidden />
+                              <input type="text" name="orderid" class="password form-control" value="{{this._id}}"
+                                hidden />
                               <button class="btn btn-dark" type="submit">Refund</button>
                             </form>
                           </div>
@@ -319,23 +229,28 @@ body {
                   {{/if}}
                   {{else}}
                   {{#if Returnrefund}}
-                  <p style="color: green;">  Return refund successfull</p>
+                  <p style="color: green;"> Return refund successfull</p>
                   {{else}}
                   <div class="width:2rem">
-                     <h6 class="text-info" style="width:10rem;">Product retured by customer</h6>
-                     <a style="" class="login-trigger btn btn-dark" href="#" data-target="#log{{this._id}}" data-toggle="modal">Refund</a>
-                     <div id="log{{this._id}}" class="modal fade" role="dialog">
+                    <h6 class="text-info" style="width:10rem;">Product retured by customer</h6>
+                    <a style="" class="login-trigger btn btn-dark" href="#" data-target="#log{{this._id}}"
+                      data-toggle="modal">Refund</a>
+                    <div id="log{{this._id}}" class="modal fade" role="dialog">
                       <div class="modal-dialog">
                         <div class="modal-content">
                           <div class="modal-body">
                             <button data-dismiss="modal" class="close">&times;</button>
                             <h4>Refund</h4>
                             <form action="/admin/ReturnRe" method="post">
-                               <h4 style="color: red;"><span>Amount:{{this.totalAmount}} /- </span></h4>                              
-                               <input type="number" name="Amount" class="password form-control" value="{{this.totalAmount}}" hidden/>
-                                <input type="text" name="info" class="password form-control" value="prodcut Returnd Refund" hidden/>
-                              <input type="text" name="userId" this class="password form-control" value="{{this.userId}}" hidden />
-                              <input type="text" name="orderid" class="password form-control" value="{{this._id}}" hidden />
+                              <h4 style="color: red;"><span>Amount:{{this.totalAmount}} /- </span></h4>
+                              <input type="number" name="Amount" class="password form-control"
+                                value="{{this.totalAmount}}" hidden />
+                              <input type="text" name="info" class="password form-control"
+                                value="prodcut Returnd Refund" hidden />
+                              <input type="text" name="userId" this class="password form-control"
+                                value="{{this.userId}}" hidden />
+                              <input type="text" name="orderid" class="password form-control" value="{{this._id}}"
+                                hidden />
                               <button class="btn btn-dark" type="submit">Refund</button>
                             </form>
                           </div>
@@ -351,18 +266,16 @@ body {
               {{/each}}
             </tbody>
           </table>
-          <!-- End Default Table Example -->
-          <div id="wrapper">
-            <div class="b-pagination-outer">
-              <ul id="border-pagination">
-                 {{#each NofPage}}
-                <li><a href="/admin/order-manage?data={{this}}">{{this}}</a></li>
-                 {{/each}}
-              </ul>
+          <div class="pagination" style="margin-right:48rem;margin-top: 2rem;">
+            <a href="#">&laquo;</a>
+            {{#each NofPage}}
+            <div class="bg-primary">
+              <a href="/admin/order-manage?data={{this}}">{{this}}</a>
             </div>
+            {{/each}}
+            <a href="#">&raquo;</a>
           </div>
         </div>
-      </div>
 </section>
 <script>
   var divs = document.querySelectorAll('.create_index'); for (var i = 0; i <
@@ -373,3 +286,21 @@ body {
     document.getElementById('popupform').style.display = "block";
   }
 </script>
+<style>
+  .pagination a {
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: background-color .3s;
+  }
+
+  .pagination a.active {
+    background-color: dodgerblue;
+    color: white;
+  }
+
+  .pagination a:hover:not(.active) {
+    background-color: #ddd;
+  }
+</style>

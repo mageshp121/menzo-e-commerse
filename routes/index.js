@@ -22,14 +22,15 @@ const verifyLogin = (req, res, next) => {
 
 /* GET home page. */
 router.get("/", async function (req, res, next) {
-  cartCount = null
+  //cartCount = null
   if (req.session.user) {
     let userA = req.session.user
     let id = req.session.user._id
     let cartCount = await userHelperse.getCartCount(id)
+    console.log(cartCount,'///////////jdkfjkfdkfdjkfjgkfdgfd');
     productHelperse.getAllProduct().then((products) => {
       productHelperse.getAllCategory().then((ctdata) => {
-        res.render('users/index', { user: true, products,userA, ctdata, cartCount, exist: req.session.exist, msg: req.session.message });
+        res.render('users/index', { user: true, products,userA, ctdata,cartCount, exist: req.session.exist, msg: req.session.message });
         req.session.exist = null
         req.session.message = null
       })
@@ -233,38 +234,8 @@ router.get('/cart', verifyLogin, async (req, res, next) => {
     let cartItems = await userHelperse.getItems(id)
     let Total = await userHelperse.getTotal(id)
     let savedAdress = await userHelperse.takeadress(id)
-    let coupons = await userHelperse.fetchCoupons()
-    res.render('users/order', { user: true, Total, userA, cartItems, savedAdress, coupons })
+    res.render('users/order', { user: true, Total, userA, cartItems, savedAdress})
   }),
-
-  // router.post('/place-order', async (req, res, next) => {
-  //   let id = req.session.user._id
-  //   let product = await userHelperse.getAllproductList(id)
-  //   let data = req.body
-  //   if (req.session.couponAmount) {
-  //     let total = req.session.couponAmount.toFixed()
-  //     userHelperse.placeOrder(data, product, total, id).then((response) => {
-  //       if (req.body['selectedPayment'] === 'COD') {
-  //         res.json({ Codsuccess: true })
-  //       } else {
-  //         userHelperse.genarateRazorPay(response, total).then((response) => {
-  //           res.json(response)
-  //         })
-  //       }
-  //     })
-  //   } else {
-  //     userHelperse.placeOrder(data, product, Total, id).then((response) => {
-  //       if (req.body['selectedPayment'] === 'COD') {
-  //         res.json({ Codsuccess: true })
-  //       } else {
-  //         userHelperse.genarateRazorPay(response, Total).then((response) => {
-  //           res.json(response)
-  //         })
-  //       }
-  //     })
-  //   }
-
-  // }),
 
   router.post('/place-order', async (req, res, next) => {
     let id = req.session.user._id
@@ -517,7 +488,6 @@ router.get('/skip', (req,res) => {
     }
   })
   //////////////////////////
-  // res.render('users/enterOtp') //bypass otp
 })
 router.post('/verifyOtp', (req, res, next) => {
 
@@ -536,8 +506,6 @@ router.post('/verifyOtp', (req, res, next) => {
       res.redirect('otp-enter');
     }
   })
-  //res.redirect('/'); //bypass otp
-
 });
 
 router.get('/otp-enter',(req,res)=>{

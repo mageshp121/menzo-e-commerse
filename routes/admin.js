@@ -291,6 +291,7 @@ router.post('/ReturnRe',verifyadmin,(req, res) => {
 
 router.get('/offer-manage', (req, res) => {
    productHelperse.Findcoupens().then((offers) => {
+      console.log(offers,'//////////ggrehhhhhhhhhhhhhhhhhhh');
       res.render('admin/Offer-Manage', { admin: true, layout: 'admin', offers })
    })
 

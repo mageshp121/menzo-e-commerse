@@ -76,15 +76,13 @@
           </button>
         </div>
         <div class="modal-body ">
-          {{#each coupons}}
-          <div id="{{this._id}}" class="card w-75 border border-info">
-            <div class="card-body">
-              <h5 class="card-title"></h5>
-              <h2 class="text-success">{{this.Persentage}}%</h2>
-
-            </div>
-          </div>
-          {{/each}}
+        
+          <div class="card">
+            {{#each coupons}}
+  <div class="card-body">Basic card</div>
+    {{/each}}
+</div>
+        
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -369,4 +367,20 @@
       }
     })
   })
+</script>
+<script>
+  function copyText(couponName){
+              // Create a "hidden" input
+              var inp = document.createElement("input");
+              // Assign it the value of the specified element
+              inp.setAttribute("value", document.getElementById(couponName).innerHTML);
+              // Append it to the body
+              document.body.appendChild(inp);
+              // Highlight its content
+              inp.select();
+              // Copy the highlighted text
+              document.execCommand("copy");
+              // Remove it from the body
+              document.body.removeChild(inp);
+        }
 </script>

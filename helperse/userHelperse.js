@@ -727,7 +727,7 @@ module.exports = {
             if (Copndata){
                 if(totalAmount>=minAmount){
                     let Expirydate = Copndata.ExpiryDate
-                    if ( Copndata.startingDate && CurrentDate <=Expirydate){
+                    if ( Copndata.startingDate <= CurrentDate && CurrentDate <= Expirydate){
                         let final = totalAmount / 100 * Copndata.Persantage   
                         if (final <= Copndata.MaximumEmount) {
                             let FinalAmount =Math.ceil(totalAmount - final)

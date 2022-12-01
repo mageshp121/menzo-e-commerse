@@ -7,5 +7,4 @@ module.exports={
     WISHLIST_COLLECTON:'wishlist',
     WALLET_COLLECTION:'wallet',
     OFFER_COLLECTION:'coupons',
-    JUST:"just"
 }
