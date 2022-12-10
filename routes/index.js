@@ -8,6 +8,7 @@ var router = express.Router();
 var productHelperse = require('../helperse/productHelperse');
 const userHelperse = require('../helperse/userHelperse');
 const otpHelperse=require('../config/OTP')
+const Usercontroler=require('../controler/userControler')
 
 
 // custom middleware to check if user is loggede in
@@ -156,26 +157,7 @@ router.get('/get-Category-products/:id', async (req, res) => {
 
 
 //.....get singlecategory.....//
-router.get('/singleproduct/:id', async (req, res) => {
-  let userA = req.session.user
-  let singlePrId = req.params.id
-  console.log(singlePrId,'jnjnwjdnjdejdne');
-  if (userA){
-    let id = req.session.user._id
-    let cartCount = await userHelperse.getCartCount(id)
-    let singleProduct = await productHelperse.getSingleProduct(singlePrId)
-    console.log(singleProduct,'kkkllllllllllllllllllll');
-    productHelperse.getAllCategory().then((ctdata) => {
-      res.render('users/card-view', { user: true, ctdata, userA, singleProduct, cartCount })
-    })
-  } else{
-    let singleProduct = await productHelperse.getSingleProduct(singlePrId)
-    console.log(singleProduct,'................>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
-    productHelperse.getAllCategory().then((ctdata) => {
-      res.render('users/card-view', { user: true, ctdata, userA, singleProduct })
-    })
-  }
-})
+router.get('/singleproduct/:id', )
 
 
 

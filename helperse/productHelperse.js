@@ -5,43 +5,103 @@ var objectid = require('mongodb').ObjectId
 var moment = require('moment');
 
 module.exports = {
+
+
+  /*................................Get All Products........................*/
+
+  getAllProduct: () => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        let products = await db.get().collection(collection.PRODUCT_COLLECTION).find().toArray()
+        resolve(products)
+      } catch (error) {
+        let eror = {}
+        eror.message = 'something went wrong'
+        reject(eror)
+      }
+    })
+  },
+
+  /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
+
+
+
+  /*............................Add-Productp................................*/
+
+
+
   addProduct: (products, callback) => {
     db.get().collection(collection.PRODUCT_COLLECTION).insertOne(products).then((data) => {
       callback(data.insertedId)
     })
   },
-  getAllProduct: () => {
-    return new Promise(async (resolve, reject) => {
-      let products = await db.get().collection(collection.PRODUCT_COLLECTION).find().toArray()
-      resolve(products)
 
-    })
-  },
-  insertCategory: (data) => {
-    console.log(data,';....');
+  /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
+
+
+
+  /*............................Get-All-Category................................*/
+
+  getAllCategory: () => {
     return new Promise(async (resolve, reject) => {
-      let CategoryData= await db.get().collection(collection.CATEGORY_COLLECTION).findOne({"category":data.category.toLowerCase()})
-      console.log(CategoryData,',,,,,,,..>>>>>>>>>>>>>>>>');
-      if(CategoryData){
-        resolve({message:false})
-      }else{
-        console.log('giavsahdgvshagdgvhsadvfhasdffffffffsafa');
-       await db.get().collection(collection.CATEGORY_COLLECTION).insertOne({ category: data })
-        resolve({message:true})
+      try {
+        let categoryList = await db.get().collection(collection.CATEGORY_COLLECTION).find().toArray()
+        resolve(categoryList)
+      } catch (err) {
+        let eror = {}
+        eror.message = 'something went wrong'
+        reject(eror)
       }
     })
   },
-  getAllCategory: () => {
+
+
+  /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
+
+
+  /*............................Get-All-Category................................*/
+
+
+  insertCategory: (data) => {
+    console.log(data.category, ';....');
     return new Promise(async (resolve, reject) => {
-      let categoryList = await db.get().collection(collection.CATEGORY_COLLECTION).find().toArray()
-      resolve(categoryList)
+
+      try {
+        let CategoryData = await db.get().collection(collection.CATEGORY_COLLECTION).findOne({ "category": data.category.toLowerCase() })
+        if (CategoryData) {
+          resolve({ message: false })
+        } else {
+          await db.get().collection(collection.CATEGORY_COLLECTION).insertOne({ category: data.category })
+          resolve({ message: true })
+        }
+      } catch (err) {
+        console.log(err);
+        let error = {}
+        error.message = 'somthing went wrong'
+        reject(error)
+      }
     })
   },
 
+
+  /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
+
+
+
+
+
+
+
+
   deleteProduct: (prId) => {
     return new Promise((resolve, reject) => {
-      db.get().collection(collection.PRODUCT_COLLECTION).deleteOne({ _id: objectid(prId) }).then((response) => {
+      db.get().collection(collection.PRODUCT_COLLECTION).deleteOn({ _id: objectid(pr) }).then((response) => {
         resolve(response)
+      }).catch((err)=>{
+        console.log(err);
+        let error={}
+        error.message = 'somthing went wrong'
+        reject(error)
       })
     })
   },
@@ -53,9 +113,14 @@ module.exports = {
     return new Promise((resolve, reject) => {
       db.get().collection(collection.PRODUCT_COLLECTION).findOne({ _id: objectid(productId) }).then((response) => {
         resolve(response)
+      }).catch((err)=>{
+        let error={}
+        error.message = 'somthing went wrong'
+        reject(error)
       })
     })
   },
+
   updateproduct: (productid, productdata) => {
     return new Promise((resolve, reject) => {
       db.get().collection(collection.PRODUCT_COLLECTION).updateOne({ _id: objectid(productid) }, {
@@ -70,26 +135,53 @@ module.exports = {
       })
     })
   },
-  deletCategory: (data) => {
-    return new Promise(async (resolve, recject) => {
-      let productAvail = await db.get().collection(collection.PRODUCT_COLLECTION).findOne({ category: data })
-      if (productAvail) {
-        resolve({ message: true })
-      } else {
-        db.get().collection(collection.CATEGORY_COLLECTION).deleteOne({ category: data }).then(() => {
-          resolve({ message: false})
-        })
-      }
 
-    })
+
+
+  deletCategory: async(data) => {
+    return new Promise(async (resolve, recject) => {
+       await db.get().collection(collection.PRODUCT_COLLECTION).findOne({ category: data }).then((response)=>{
+        console.log(response,'length');
+        if (response) {
+          resolve({ message: true })
+        } else {
+          db.get().collection(collection.CATEGORY_COLLECTION).deleteOne({ category: data }).then((response) => {
+            resolve({ message: false })
+          }).catch((err)=>{
+            let error={}
+           error.message = 'somthing went wrong'
+           recject(error)
+         })
+        }
+       }).catch((err)=>{
+         let error={}
+        error.message = 'somthing went wrong'
+        recject(error)
+      })
+      })
   },
+
+
+
+
   editeCategory: (data) => {
     return new Promise((resolve, reject) => {
-      db.get().collection(collection.CATEGORY_COLLECTION).findOne({ _id: objectid(data) }).then((response) => {
+      db.get().collection(collection.CATEGORY_COLLECTION).findOne({ _id:objectid(data) }).then((response) => {
+        console.log(response,'//////response');
         resolve(response)
+      }).catch((err)=>{
+        let error={}
+        error.message = 'somthing went wrong'
+        reject(error)
       })
     })
   },
+
+
+
+
+
+
   updateCategory: (ctID, ctbodydata) => {
     return new Promise((resolve, reject) => {
       db.get().collection(collection.CATEGORY_COLLECTION).updateOne({ _id: objectid(ctID) }, {
@@ -101,6 +193,10 @@ module.exports = {
       })
     })
   },
+
+
+
+
   getCategoryProdcut: (ctpDta) => {
     return new Promise(async (resolve, reject) => {
       let product = await db.get().collection(collection.PRODUCT_COLLECTION).find({ category: ctpDta }).toArray()
@@ -111,11 +207,13 @@ module.exports = {
 
 
   getSingleProduct: (singlePrId) => {
-    
+
     return new Promise((resolve, reject) => {
+
       db.get().collection(collection.PRODUCT_COLLECTION).findOne({ _id: objectid(singlePrId) }).then((response) => {
         resolve(response)
       })
+
     })
   },
   getMonthsale: () => {
@@ -157,26 +255,26 @@ module.exports = {
       resolve(Month)
     })
   },
-  CancelRefundAmount: (userId,Amount,info,orderID) => {
+  CancelRefundAmount: (userId, Amount, info, orderID) => {
     let user = objectid(userId)
-    let CancelRefundData={
-           about:info,
-           Ordetid:orderID,
-           Amount:Amount,
-           Date:moment().format('MMMM Do YYYY, h:mm:ss a'),
+    let CancelRefundData = {
+      about: info,
+      Ordetid: orderID,
+      Amount: Amount,
+      Date: moment().format('MMMM Do YYYY, h:mm:ss a'),
     }
     return new Promise((resolve, reject) => {
-      db.get().collection(collection.USERS_COLLECTION).updateOne({ _id:user}, {
-         
-        $inc: { WalletAmount:Amount },
-        $push: { TransferDetails:CancelRefundData},
+      db.get().collection(collection.USERS_COLLECTION).updateOne({ _id: user }, {
+
+        $inc: { WalletAmount: Amount },
+        $push: { TransferDetails: CancelRefundData },
         $set: {
           CancelRefund: true
         }
       }).then((response) => {
         resolve(response)
       })
-      db.get().collection(collection.ORDER_COLLECTION).updateOne({ _id:objectid(orderID) }, {
+      db.get().collection(collection.ORDER_COLLECTION).updateOne({ _id: objectid(orderID) }, {
         $set: {
           CancelRefund: true
         }
@@ -188,17 +286,17 @@ module.exports = {
 
 
   ReturnRefundAmount: (userid, Amount, info, ordId) => {
-    let RetunRefundData={
-      about:info,
-      Ordetid:ordId,
-      Amount:Amount,
-      Date:moment().format('MMMM Do YYYY, h:mm:ss a'),
+    let RetunRefundData = {
+      about: info,
+      Ordetid: ordId,
+      Amount: Amount,
+      Date: moment().format('MMMM Do YYYY, h:mm:ss a'),
     }
     let usid = objectid(userid)
     return new Promise((resolve, reject) => {
-      db.get().collection(collection.USERS_COLLECTION).updateOne({_id:usid}, {
+      db.get().collection(collection.USERS_COLLECTION).updateOne({ _id: usid }, {
         $inc: { WalletAmount: Amount },
-        $push: { TransferDetails:RetunRefundData},
+        $push: { TransferDetails: RetunRefundData },
         $set: {
           ReturnRefund: true
         }
@@ -253,20 +351,20 @@ module.exports = {
   //   })
   // },
 
-  InsetOffer: (persentage, MaxiAmount, about, CouponCode, expiry,startingDate,minParchase) => {
+  InsetOffer: (persentage, MaxiAmount, about, CouponCode, expiry, startingDate, minParchase) => {
     console.log(expiry, '/////////////////////////////;;;;;;;;;;;;;;;;;;;;;');
-    console.log(startingDate,'haiwa that st date  here');
+    console.log(startingDate, 'haiwa that st date  here');
     let couponObejct = {}
     let ExpDate = new Date(expiry)
-    let StDate=new Date(startingDate)
+    let StDate = new Date(startingDate)
     return new Promise(async (resolve, reject) => {
       couponObejct.MaximumEmount = MaxiAmount
       couponObejct.Persantage = persentage
       couponObejct.About = about
       couponObejct.code = CouponCode
       couponObejct.ExpiryDate = ExpDate
-      couponObejct.startingDate=StDate
-      couponObejct.MiniumParchaseAmount=minParchase
+      couponObejct.startingDate = StDate
+      couponObejct.MiniumParchaseAmount = minParchase
       await db.get().collection(collection.OFFER_COLLECTION).insertOne(couponObejct)
       resolve()
     })
@@ -275,7 +373,7 @@ module.exports = {
 
 
 
-  
+
   Findcoupens: () => {
     return new Promise((resolve, reject) => {
       let Offers = db.get().collection(collection.OFFER_COLLECTION).find().toArray()
@@ -283,13 +381,13 @@ module.exports = {
 
     })
   },
-  DeleteCoupon:(couponID)=>{
-    console.log(couponID,'--------------cpn--------------');
-    return new Promise((resolve,reject)=>{
-      db.get().collection(collection.OFFER_COLLECTION).deleteOne({_id:objectid(couponID)}).then((response)=>{
+  DeleteCoupon: (couponID) => {
+    console.log(couponID, '--------------cpn--------------');
+    return new Promise((resolve, reject) => {
+      db.get().collection(collection.OFFER_COLLECTION).deleteOne({ _id: objectid(couponID) }).then((response) => {
         resolve(response)
       })
-      
+
     })
   }
 

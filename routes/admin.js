@@ -5,6 +5,7 @@ var router = express.Router();
 var productHelperse = require('../helperse/productHelperse');
 const { verifyMobile } = require('../helperse/userHelperse');
 const userHelperse = require('../helperse/userHelperse');
+const admicontroler=require('../controler/adminControler')
 
 
 
@@ -42,23 +43,6 @@ router.post('/admin-login',(req,res)=>{
    console.log(data,'.>>>>>>>>>>>>>>>>>>>>Ghghg>>>>ncjhsagbcd');
 })
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 router.get('/adminhome', async (req, res, next) =>{
    let admin=req.session.admin   
    if(admin){
@@ -70,97 +54,61 @@ router.get('/adminhome', async (req, res, next) =>{
    
 });
 
-/*..............................product management........................*/
+/*.......................................product-Management_Page.......................................*/
 
-router.get('/product-manage', async (req, res) => {
-   productHelperse.getAllProduct().then((products) => {
-      res.render('admin/product-manage', { admin: true, layout: 'admin', products })
-   })
+router.get('/product-manage',admicontroler.ProductPage)
 
-})
+/*.....................................................................................................*/
+/*...........................................Add-Product-Page..........................................*/
 
-router.get('/add-product', (req, res) => {
-   productHelperse.getAllCategory().then((ctdata) => {
-      res.render('admin/add-product', { admin: true, layout: 'admin', ctdata })
-   })
-})
+router.get('/add-product',admicontroler.AddProductPage)
 
-router.post('/add-product', (req, res) => {
-   req.body.price = parseInt(req.body.price)
-   productHelperse.getAllCategory().then((ctdata) => {
-      productHelperse.addProduct(req.body, (id) => {
-         let image = req.files.image;
-         image.mv('./public/product-images/' + id + '.jpg', (err, done) => {
-            if (!err) {
-               res.render('admin/add-product', { admin: true, layout: 'admin', ctdata })
-            } else {
-               console.log(err);
-            }
-         })
-      })
-   })
+/*.....................................................................................................*/
+/*...........................................Add-Product-Post..........................................*/
 
-})
+router.post('/add-product',admicontroler.AddProduct);
+
+/*.....................................................................................................*/
+/*...........................................Delete-Product............................................*/
+
+router.get('/delete-product/:id',admicontroler.DeleteProduct )
+
+/*.....................................................................................................*/
+/*..........................................Category-Managemnt-page.....................................*/
 
 
-/*.............category mangement...........*/
+router.get('/add-category',admicontroler.AddCategoryPage)
 
 
-
-router.get('/add-category', (req, res) => {
-   res.render('admin/add-category', { admin: true, layout: 'admin', CateMessage: req.session.CateEXIst,text:"here here" })
-   req.session.CateEXIst = null
-})
+/*.....................................................................................................*/
+/*............................................Add-Category-Page.......................................*/
 
 
-router.post('/add-category', (req, res) => {
-   let add = req.body
-   console.log(add,'////////////???????????Agsyagsagaga');
-   productHelperse.insertCategory(add).then((response) => {
-      if (response.message) {
-         req.session.CateEXIst = "Category added"
-         // res.redirect('/admin/add-category')
-         res.json({ok:true})
-      } else {
-         req.session.CateEXIst = "Soryy Category alreadyexist"
-         // res.redirect('/admin/add-category')
-         res.json({ok:false})
-      }
-   })
+router.get('/category-manage',admicontroler.GetAllCategory )
 
 
-})
-
-router.get('/category-manage', (req, res) => {
-   productHelperse.getAllCategory().then((ctdata) => {
-      res.render('admin/category-manage', { admin: true, layout: 'admin', ctdata, productExist: req.session.productExist })
-      req.session.productExist = null
-   })
-})
+/*.....................................................................................................*/
+/*............................................Add-Category-post.......................................*/
 
 
-/*.......................... delete and edite product........*/
+router.post('/add-category',admicontroler.AddCategory)
+ 
+
+/*.....................................................................................................*/
+/*---------------------------------------------Delete-category------------------------------------------*/
 
 
 
-router.get('/delete-product/:id', (req, res) => {
-   var prId = req.params.id
-   productHelperse.deleteProduct(prId).then((response) => {
-      res.redirect('/admin/product-manage')
-   })
+router.get('/delete-category/:categoryName',admicontroler.DeleteCtegory)
 
-})
-
-/*...............................edite-product..........................*/
+/*.....................................................................................................*/
+/*----------------------------------------------edite-product-page--------------------------------------*/
 
 
-router.get('/edite-product/', async (req, res) => {
-   let Details = req.query.id
-   let products = await productHelperse.getProductdetails(Details)
-   res.render('admin/edite-product', { admin: true, layout: 'admin', products })
-}),
+router.get('/edite-product/',admicontroler.EditeProduct),
 
-   /*........................edite product........................*/
+/*.....................................................................................................*/
+/*----------------------------------------------edite-product-Post--------------------------------------*/
 
 
    router.post('/edite-product/:id', (req, res) => {
@@ -171,27 +119,11 @@ router.get('/edite-product/', async (req, res) => {
             let image = req.files.image
             image.mv('./public/product-images/' + id + '.jpg')
          }
+      }).catch((error)=>{
+         res.render('admin/error',{error})
       })
    })
 
-
-/*..........................delete category............................*/
-
-
-router.get('/delete-category/:categoryName', (req, res) => {
-   let ctId = req.params.categoryName
-   productHelperse.deletCategory(ctId).then((response) => {
-      if (response.message) {
-         req.session.productExist = "Category is not empty, cannot performe delete"
-         res.redirect('/admin/category-manage')
-      } else {
-         res.redirect('/admin/category-manage')
-      }
-
-   })
-
-
-})
 
 
 
@@ -199,9 +131,9 @@ router.get('/delete-category/:categoryName', (req, res) => {
 
 
 router.get('/edite-category/', async (req, res) => {
-   let ctDetails = req.query.id
-   let ctbody = await productHelperse.editeCategory(ctDetails)
-   res.render('admin/edite-category', { admin: true, layout: 'admin', ctbody })
+      let ctDetails = req.query.id
+      let ctbody = await productHelperse.editeCategory(ctDetails)
+      res.render('admin/edite-category', { admin: true, layout: 'admin', ctbody })
 })
 
 router.post('/update-category/:id', (req, res) => {
@@ -300,8 +232,6 @@ router.get('/Add-Offer', (req, res) => {
    res.render('admin/Add-Offer', { admin: true, layout: 'admin' })
 })
 router.post('/ADD-Offer',verifyadmin,(req, res) => {
-   
-   console.log(req.body,'req.body here');
    let persentage = parseInt(req.body.Persantage)
    let MaxiAmount = parseInt(req.body.MaximunAmount)
    let minParchase= parseInt(req.body.minParchase)
@@ -310,9 +240,8 @@ router.post('/ADD-Offer',verifyadmin,(req, res) => {
    let expiry = req.body.expiry
    let startingDate=req.body.starting
    productHelperse.InsetOffer(persentage, MaxiAmount, about, CouponCode, expiry,startingDate,minParchase).then(() => {
-      res.redirect('Add-Offer')
+   res.redirect('Add-Offer')
    })
-
 })
 router.get('/Delete-Offer/:id',verifyadmin,(req,res)=>{
     let CouponeId=req.params.id

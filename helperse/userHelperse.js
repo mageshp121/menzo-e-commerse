@@ -312,13 +312,13 @@ module.exports = {
                         $unwind: '$adress'
                     },
                     {
-                        $project: {
+                        $project:{
                             id: '$adress.id',
                             Name: '$adress.Name',
                             Mobile: '$adress.Phone',
                             Email: '$adress.Email',
                             address: '$adress.Adress',
-                            city: '$adress.Ci          ty',
+                            city: '$adress.City',
                             State: '$adress.state',
                             Pincode: '$adress.pincode'
                         }
